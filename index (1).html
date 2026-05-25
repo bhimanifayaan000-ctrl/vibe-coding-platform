@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Seven Seas – Global Import & Export</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --beige-50: #fdf8f0;
+    --beige-100: #f5ede0;
+    --beige-200: #e8d8c0;
+    --beige-300: #d4bc98;
+    --ocean-deep: #0a3d5c;
+    --ocean-mid: #1a6b8a;
+    --ocean-teal: #2a9d8f;
+    --ocean-light: #48b5c4;
+    --ocean-foam: #a8d8e0;
+    --gold: #c9a84c;
+    --gold-light: #e8c878;
+    --text-dark: #1a2a35;
+    --text-mid: #3d5a6e;
+    --white: #fff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--beige-50);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(253, 248, 240, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--beige-200);
+  }
+
+  .logo {
+    font-size: 1.6rem;
+    letter-spacing: 0.03em;
+    color: var(--ocean-deep);
+    text-decoration: none;
+  }
+  .logo .bold  { font-family: 'Playfair Display', serif; font-weight: 700; font-style: normal; }
+  .logo .italic{ font-family: 'Playfair Display', serif; font-weight: 400; font-style: italic; color: var(--ocean-teal); }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-mid); text-decoration: none; font-weight: 500;
+    transition: color .25s;
+  }
+  .nav-links a:hover { color: var(--ocean-teal); }
+
+  .nav-cta {
+    background: var(--ocean-deep);
+    color: var(--white) !important;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2px;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background .25s;
+  }
+  .nav-cta:hover { background: var(--ocean-mid) !important; color: var(--white) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(160deg, var(--ocean-deep) 0%, var(--ocean-mid) 45%, var(--ocean-teal) 100%);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 8rem 4rem 4rem;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cdefs%3E%3CradialGradient id='g' cx='70%25' cy='60%25' r='60%25'%3E%3Cstop offset='0' stop-color='%23ffffff' stop-opacity='0.04'/%3E%3Cstop offset='100%25' stop-color='%23ffffff' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23g)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  /* animated wave rings */
+  .wave-ring {
+    position: absolute; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.08);
+    animation: expandRing 8s linear infinite;
+  }
+  .wave-ring:nth-child(2){ width:500px; height:500px; right:-100px; bottom:-100px; animation-delay: 0s; }
+  .wave-ring:nth-child(3){ width:700px; height:700px; right:-200px; bottom:-200px; animation-delay: 2s; }
+  .wave-ring:nth-child(4){ width:900px; height:900px; right:-300px; bottom:-300px; animation-delay: 4s; }
+
+  @keyframes expandRing {
+    0%  { opacity: 0.4; transform: scale(0.9); }
+    100%{ opacity: 0;   transform: scale(1.15);}
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 680px; }
+
+  .hero-eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ocean-foam); font-weight: 500; margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 36px; height: 1px; background: var(--ocean-foam);
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.08;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+  .hero h1 em {
+    font-style: italic; color: var(--gold-light);
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 300; font-style: italic;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-desc {
+    font-size: 0.9rem; line-height: 1.8;
+    color: rgba(255,255,255,0.75);
+    max-width: 480px; margin-bottom: 3rem;
+    font-weight: 300;
+  }
+
+  .hero-actions { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--ocean-deep);
+    padding: 0.85rem 2.2rem;
+    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 600; text-decoration: none; border-radius: 2px;
+    transition: background .25s, transform .2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-outline {
+    border: 1px solid rgba(255,255,255,0.4);
+    color: var(--white);
+    padding: 0.85rem 2.2rem;
+    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 500; text-decoration: none; border-radius: 2px;
+    transition: border-color .25s, background .25s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.08); }
+
+  /* stats bar */
+  .stats-bar {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: rgba(10,30,45,0.55);
+    backdrop-filter: blur(12px);
+    display: flex; justify-content: center;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .stat-item {
+    padding: 1.8rem 3.5rem;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 500;
+    color: var(--gold-light); line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55); margin-top: 0.35rem; font-weight: 400;
+  }
+
+  /* ── SECTIONS SHARED ── */
+  section { padding: 6rem 4rem; }
+
+  .section-eyebrow {
+    font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ocean-teal); font-weight: 600; margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 500; line-height: 1.15;
+    color: var(--ocean-deep);
+  }
+
+  /* ── ABOUT ── */
+  .about { background: var(--white); }
+  .about-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+  }
+  .about-text .section-title { margin-bottom: 1.5rem; }
+  .about-text p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.18rem; font-weight: 400; line-height: 1.85;
+    color: var(--text-mid); margin-bottom: 1.2rem;
+  }
+  .about-visual {
+    position: relative; aspect-ratio: 4/3;
+    background: linear-gradient(135deg, var(--ocean-deep), var(--ocean-teal));
+    border-radius: 4px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .about-visual::after {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='260'%3E%3Cpath d='M-40 60 Q10 45 60 60 Q110 75 160 60 Q210 45 260 60 Q310 75 360 60 Q410 45 440 60' fill='none' stroke='rgba(255,255,255,0.07)' stroke-width='1.5'/%3E%3Cpath d='M-40 85 Q10 70 60 85 Q110 100 160 85 Q210 70 260 85 Q310 100 360 85 Q410 70 440 85' fill='none' stroke='rgba(255,255,255,0.07)' stroke-width='1.5'/%3E%3Cpath d='M-40 110 Q10 95 60 110 Q110 125 160 110 Q210 95 260 110 Q310 125 360 110 Q410 95 440 110' fill='none' stroke='rgba(255,255,255,0.07)' stroke-width='1.5'/%3E%3Cpath d='M-40 135 Q10 120 60 135 Q110 150 160 135 Q210 120 260 135 Q310 150 360 135 Q410 120 440 135' fill='none' stroke='rgba(255,255,255,0.06)' stroke-width='1.5'/%3E%3Cpath d='M-40 160 Q10 145 60 160 Q110 175 160 160 Q210 145 260 160 Q310 175 360 160 Q410 145 440 160' fill='none' stroke='rgba(255,255,255,0.06)' stroke-width='1.5'/%3E%3Cpath d='M-40 185 Q10 170 60 185 Q110 200 160 185 Q210 170 260 185 Q310 200 360 185 Q410 170 440 185' fill='none' stroke='rgba(255,255,255,0.05)' stroke-width='1.5'/%3E%3Cpath d='M-40 210 Q10 195 60 210 Q110 225 160 210 Q210 195 260 210 Q310 225 360 210 Q410 195 440 210' fill='none' stroke='rgba(255,255,255,0.05)' stroke-width='1.5'/%3E%3Cpath d='M-40 235 Q10 220 60 235 Q110 250 160 235 Q210 220 260 235 Q310 250 360 235 Q410 220 440 235' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-size: cover;
+  }
+  .compass {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem; color: rgba(255,255,255,0.15);
+    user-select: none; position: relative; z-index: 1;
+  }
+  .about-badge {
+    position: absolute; bottom: 1.5rem; right: 1.5rem;
+    background: var(--gold);
+    padding: 0.8rem 1.2rem;
+    border-radius: 2px; z-index: 2;
+  }
+  .about-badge-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 700; color: var(--ocean-deep); line-height: 1;
+  }
+  .about-badge-text {
+    font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ocean-deep); font-weight: 600;
+  }
+
+  /* ── SERVICES ── */
+  .services { background: var(--beige-50); }
+  .services-inner { max-width: 1100px; margin: 0 auto; }
+  .services-header { margin-bottom: 3.5rem; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+  .service-card {
+    background: var(--white);
+    border: 1px solid var(--beige-200);
+    padding: 2.2rem 2rem;
+    border-radius: 4px;
+    transition: transform .3s, box-shadow .3s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--ocean-teal), var(--ocean-light));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .35s ease;
+  }
+  .service-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(10,61,92,0.1); }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-icon {
+    width: 48px; height: 48px;
+    background: var(--beige-100);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.4rem; font-size: 1.4rem;
+  }
+  .service-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem; font-weight: 500;
+    color: var(--ocean-deep); margin-bottom: 0.8rem;
+  }
+  .service-card p {
+    font-size: 0.82rem; line-height: 1.8; color: var(--text-mid); font-weight: 300;
+  }
+
+  /* ── CATEGORIES ── */
+  .categories { background: linear-gradient(160deg, var(--ocean-deep) 0%, var(--ocean-mid) 100%); }
+  .categories-inner { max-width: 1100px; margin: 0 auto; }
+  .categories-header { margin-bottom: 3rem; }
+  .categories-header .section-eyebrow { color: var(--ocean-foam); }
+  .categories-header .section-title { color: var(--white); }
+
+  .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+
+  .cat-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 1.8rem 1.5rem;
+    border-radius: 4px;
+    text-align: center;
+    transition: background .3s, border-color .3s;
+    cursor: default;
+  }
+  .cat-card:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); }
+  .cat-card .cat-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+  .cat-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 500; color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+  .cat-card p { font-size: 0.72rem; color: rgba(255,255,255,0.55); line-height: 1.6; font-weight: 300; }
+
+  /* ── WHY US ── */
+  .why { background: var(--white); }
+  .why-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; align-items: start;
+  }
+  .why-left .section-title { margin-bottom: 1.5rem; }
+  .why-left p { font-size: 0.88rem; line-height: 1.9; color: var(--text-mid); font-weight: 300; margin-bottom: 2rem; }
+  .why-cta {
+    display: inline-block; padding: 0.85rem 2rem;
+    background: var(--ocean-deep); color: var(--white);
+    font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 600; text-decoration: none; border-radius: 2px;
+    transition: background .25s;
+  }
+  .why-cta:hover { background: var(--ocean-mid); }
+
+  .why-list { display: flex; flex-direction: column; gap: 1.2rem; }
+  .why-item {
+    display: flex; gap: 1.2rem; align-items: flex-start;
+    padding: 1.4rem 1.5rem;
+    background: var(--beige-50);
+    border: 1px solid var(--beige-200);
+    border-radius: 4px;
+  }
+  .why-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 700; color: var(--beige-300);
+    line-height: 1; flex-shrink: 0; width: 2.5rem;
+  }
+  .why-item-body h4 {
+    font-size: 0.9rem; font-weight: 600; color: var(--ocean-deep); margin-bottom: 0.3rem;
+  }
+  .why-item-body p { font-size: 0.8rem; line-height: 1.7; color: var(--text-mid); font-weight: 300; }
+
+  /* ── CONTACT ── */
+  .contact { background: var(--beige-100); }
+  .contact-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+  .contact-inner .section-title { margin-bottom: 1rem; }
+  .contact-inner > p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; color: var(--text-mid); line-height: 1.7; margin-bottom: 3rem;
+  }
+
+  .contact-form {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    text-align: left;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group.full { grid-column: 1/-1; }
+  .form-group label {
+    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-mid); font-weight: 600;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--white); border: 1px solid var(--beige-200);
+    padding: 0.75rem 1rem; border-radius: 2px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem; color: var(--text-dark);
+    outline: none; transition: border-color .25s;
+    resize: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--ocean-teal); }
+  .form-submit {
+    grid-column: 1/-1; text-align: center; margin-top: 0.5rem;
+  }
+  .form-submit button {
+    background: var(--ocean-deep); color: var(--white);
+    border: none; padding: 1rem 3.5rem; cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600;
+    border-radius: 2px; transition: background .25s;
+  }
+  .form-submit button:hover { background: var(--ocean-mid); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ocean-deep);
+    padding: 3.5rem 4rem;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+  }
+  .footer-brand .logo { font-size: 1.4rem; margin-bottom: 1rem; display: block; }
+  .footer-brand p { font-size: 0.8rem; line-height: 1.8; color: rgba(255,255,255,0.5); font-weight: 300; }
+
+  .footer-col h5 {
+    font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5); margin-bottom: 1rem; font-weight: 600;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-col a {
+    font-size: 0.82rem; color: rgba(255,255,255,0.65); text-decoration: none;
+    transition: color .2s; font-weight: 300;
+  }
+  .footer-col a:hover { color: var(--ocean-foam); }
+
+  .footer-bottom {
+    background: rgba(0,0,0,0.2);
+    text-align: center; padding: 1.2rem 4rem;
+    font-size: 0.72rem; color: rgba(255,255,255,0.35);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-up { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 8rem; }
+    .about-inner, .why-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .cat-grid { grid-template-columns: 1fr 1fr; }
+    .stats-bar { flex-wrap: wrap; }
+    .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    footer { grid-template-columns: 1fr 1fr; }
+    .contact-form { grid-template-columns: 1fr; }
+    .form-group.full { grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <span class="bold">Seven</span>&nbsp;<span class="italic">Seas</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#categories">Products</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="wave-ring"></div>
+  <div class="wave-ring"></div>
+  <div class="wave-ring"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Global Trade Solutions</p>
+    <h1>
+      <span style="font-family:'Playfair Display',serif;font-weight:700;font-style:normal;">Seven</span><br>
+      <em style="font-family:'Playfair Display',serif;font-weight:400;font-style:italic;">Seas</em>
+    </h1>
+    <p class="hero-tagline">Connecting the world, one shipment at a time.</p>
+    <p class="hero-desc">
+      We bridge markets across continents — sourcing quality goods globally and delivering them reliably to your doorstep. Your trusted partner in international trade.
+    </p>
+    <div class="hero-actions">
+      <a href="#categories" class="btn-primary">Explore Products</a>
+      <a href="#contact" class="btn-outline">Request a Quote</a>
+    </div>
+  </div>
+
+
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-text fade-up">
+      <p class="section-eyebrow">About Seven Seas</p>
+      <h2 class="section-title">Bridging Borders,<br>Building Trade</h2>
+      <p>
+        Seven Seas is a full-spectrum import and export company headquartered in India, committed to facilitating seamless cross-border trade for businesses of all sizes.
+      </p>
+      <p>
+        From sourcing raw materials to delivering finished goods, we manage every step of the international supply chain with precision, compliance, and care.
+      </p>
+      <p>
+        Our deep network of global partners and logistics experts ensures your cargo moves safely and on schedule — every time.
+      </p>
+    </div>
+    <div class="about-visual fade-up">
+      <svg viewBox="0 0 400 340" xmlns="http://www.w3.org/2000/svg" style="width:85%;max-width:340px;position:relative;z-index:2;">
+        <circle cx="200" cy="155" r="118" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+        <circle cx="200" cy="155" r="100" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="0.5"/>
+        <line x1="200" y1="37" x2="200" y2="55" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="200" y1="255" x2="200" y2="273" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="82" y1="155" x2="100" y2="155" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="300" y1="155" x2="318" y2="155" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M130 175 Q200 195 270 175 L258 200 Q200 218 142 200 Z" fill="rgba(255,255,255,0.92)"/>
+        <rect x="155" y="152" width="90" height="26" rx="3" fill="rgba(255,255,255,0.85)"/>
+        <rect x="174" y="136" width="52" height="20" rx="2" fill="rgba(255,255,255,0.75)"/>
+        <circle cx="187" cy="146" r="4" fill="#1a6b8a"/>
+        <circle cx="200" cy="146" r="4" fill="#1a6b8a"/>
+        <circle cx="213" cy="146" r="4" fill="#1a6b8a"/>
+        <line x1="200" y1="90" x2="200" y2="152" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round"/>
+        <path d="M200 95 Q170 112 168 148 L200 148 Z" fill="rgba(201,168,76,0.85)"/>
+        <path d="M200 98 Q228 115 230 148 L200 148 Z" fill="rgba(201,168,76,0.65)"/>
+        <polygon points="200,90 218,96 200,102" fill="#c9a84c"/>
+        <path d="M118 212 Q133 207 148 212 Q163 217 178 212 Q193 207 208 212 Q223 217 238 212 Q253 207 268 212 Q283 217 282 212" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M125 222 Q140 217 155 222 Q170 227 185 222 Q200 217 215 222 Q230 227 245 222 Q260 217 275 222" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.2" stroke-linecap="round"/>
+        <text x="200" y="272" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="28" font-weight="700" font-style="normal" fill="#ffffff" letter-spacing="2">SEVEN</text>
+        <text x="200" y="298" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="22" font-weight="400" font-style="italic" fill="#ffffff" letter-spacing="3">Seas</text>
+        <text x="200" y="320" text-anchor="middle" font-family="'Montserrat', Arial, sans-serif" font-size="8.5" font-weight="400" fill="rgba(255,255,255,0.45)" letter-spacing="3.5">GLOBAL TRADE SOLUTIONS</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-inner">
+    <div class="services-header fade-up">
+      <p class="section-eyebrow">What We Do</p>
+      <h2 class="section-title">End-to-End Trade Services</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-up">
+        <div class="service-icon">🚢</div>
+        <h3>Ocean Freight</h3>
+        <p>Full container and LCL shipments worldwide. We handle documentation, customs clearance, and last-mile delivery with efficiency.</p>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-icon">📦</div>
+        <h3>Import Services</h3>
+        <p>Seamless sourcing of goods from global markets. We ensure compliance with Indian customs regulations at every step.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon">🌐</div>
+        <h3>Export Services</h3>
+        <p>Expanding your reach to international buyers. We handle export documentation, quality certification, and freight forwarding.</p>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-icon">🔗</div>
+        <h3>Supply Chain</h3>
+        <p>End-to-end logistics management from supplier to consumer. Inventory planning, warehousing, and distribution solutions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT CATEGORIES -->
+<section class="categories" id="categories">
+  <div class="categories-inner">
+    <div class="categories-header fade-up">
+      <p class="section-eyebrow">Our Portfolio</p>
+      <h2 class="section-title">Products We Trade</h2>
+    </div>
+
+    <!-- Category pills -->
+    <div class="cat-grid" style="margin-bottom:3rem;">
+      <div class="cat-card fade-up">
+        <div class="cat-icon">🌾</div>
+        <h4>Agricultural</h4>
+        <p>Grains, spices, pulses, oilseeds & fresh produce</p>
+      </div>
+      <div class="cat-card fade-up">
+        <div class="cat-icon">🏭</div>
+        <h4>Industrial</h4>
+        <p>Machinery parts, metals, and raw materials</p>
+      </div>
+      <div class="cat-card fade-up">
+        <div class="cat-icon">🍶</div>
+        <h4>FMCG</h4>
+        <p>Packaged foods, beverages, and consumer goods</p>
+      </div>
+    </div>
+
+    <!-- Product cards with photos -->
+    <div class="prod-header fade-up">
+      <p class="section-eyebrow" style="color:var(--ocean-foam);">Featured Products</p>
+    </div>
+    <div class="prod-grid">
+
+      <div class="prod-card fade-up">
+        <div class="prod-img-wrap">
+          <img src="https://images.squarespace-cdn.com/content/v1/5e8ad3d7965f7a2e2c2e3d8f/1586189453000-XYZABC/fruits.jpg"
+               onerror="this.style.display='none';this.parentNode.querySelector('.prod-img-fallback').style.display='flex'"
+               alt="Fresh Fruits" class="prod-img"/>
+          <div class="prod-img-fallback" style="display:none;">🍎</div>
+        </div>
+        <div class="prod-info">
+          <h4>Fresh Fruits</h4>
+          <p>Mangoes, grapes, pomegranates, bananas & seasonal tropical fruits sourced from top Indian farms for global export.</p>
+          <span class="prod-tag">Agricultural</span>
+        </div>
+      </div>
+
+      <div class="prod-card fade-up">
+        <div class="prod-img-wrap">
+          <img src="https://knpexport.com/wp-content/uploads/2021/03/vegetables.jpg"
+               onerror="this.style.display='none';this.parentNode.querySelector('.prod-img-fallback').style.display='flex'"
+               alt="Fresh Vegetables" class="prod-img"/>
+          <div class="prod-img-fallback" style="display:none;">🥦</div>
+        </div>
+        <div class="prod-info">
+          <h4>Fresh Vegetables</h4>
+          <p>Onions, potatoes, tomatoes, leafy greens & exotic vegetables. Fresh, farm-direct and packed to international standards.</p>
+          <span class="prod-tag">Agricultural</span>
+        </div>
+      </div>
+
+      <div class="prod-card fade-up">
+        <div class="prod-img-wrap">
+          <img src="https://www.riddhisridhi.com/wp-content/uploads/2022/05/steel-products.jpg"
+               onerror="this.style.display='none';this.parentNode.querySelector('.prod-img-fallback').style.display='flex'"
+               alt="Steel Products" class="prod-img"/>
+          <div class="prod-img-fallback" style="display:none;">🔩</div>
+        </div>
+        <div class="prod-info">
+          <h4>Steel Products</h4>
+          <p>TMT bars, steel rods, sheets, coils and structural steel for construction and industrial applications worldwide.</p>
+          <span class="prod-tag">Industrial</span>
+        </div>
+      </div>
+
+      <div class="prod-card fade-up">
+        <div class="prod-img-wrap">
+          <img src="https://www.spicelane.com/wp-content/uploads/2021/02/spices.jpg"
+               onerror="this.style.display='none';this.parentNode.querySelector('.prod-img-fallback').style.display='flex'"
+               alt="Indian Spices" class="prod-img"/>
+          <div class="prod-img-fallback" style="display:none;">🌶️</div>
+        </div>
+        <div class="prod-info">
+          <h4>Spices</h4>
+          <p>Turmeric, cumin, coriander, cardamom, black pepper & premium blended spices. India's finest flavours for the world.</p>
+          <span class="prod-tag">Agricultural</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .prod-header { margin-bottom: 1.5rem; }
+  .prod-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+  }
+  .prod-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: transform .3s, box-shadow .3s;
+  }
+  .prod-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+  .prod-img-wrap {
+    width: 100%; height: 180px;
+    overflow: hidden; position: relative;
+    background: rgba(255,255,255,0.05);
+  }
+  .prod-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .prod-card:hover .prod-img { transform: scale(1.07); }
+  .prod-img-fallback {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem;
+    background: rgba(255,255,255,0.05);
+  }
+  .prod-info { padding: 1.2rem 1.3rem 1.4rem; }
+  .prod-info h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 600;
+    color: #fff; margin-bottom: 0.5rem;
+  }
+  .prod-info p {
+    font-size: 0.78rem; line-height: 1.7;
+    color: rgba(255,255,255,0.6); font-weight: 300;
+    margin-bottom: 0.9rem;
+  }
+  .prod-tag {
+    font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+    background: rgba(42,157,143,0.25); color: var(--ocean-foam);
+    padding: 0.25rem 0.7rem; border-radius: 20px;
+    border: 1px solid rgba(42,157,143,0.35);
+  }
+  @media (max-width: 900px) {
+    .prod-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 540px) {
+    .prod-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="why-inner">
+    <div class="why-left fade-up">
+      <p class="section-eyebrow">Why Choose Us</p>
+      <h2 class="section-title">Trade with Confidence</h2>
+      <p>Seven Seas brings together a robust global network and a commitment to transparent, ethical trade — so your business can grow beyond borders without worry.</p>
+      <a href="#contact" class="why-cta">Work With Us</a>
+    </div>
+    <div class="why-list">
+      <div class="why-item fade-up">
+        <div class="why-num">01</div>
+        <div class="why-item-body">
+          <h4>Verified Global Suppliers</h4>
+          <p>We work exclusively with audited, compliant suppliers across 50+ countries to guarantee product quality and ethical sourcing.</p>
+        </div>
+      </div>
+      <div class="why-item fade-up">
+        <div class="why-num">02</div>
+        <div class="why-item-body">
+          <h4>Transparent Pricing</h4>
+          <p>No hidden charges. Every quote includes duties, freight, and insurance — fully itemised so you always know your landed cost.</p>
+        </div>
+      </div>
+      <div class="why-item fade-up">
+        <div class="why-num">03</div>
+        <div class="why-item-body">
+          <h4>Real-Time Shipment Tracking</h4>
+          <p>Track your cargo 24/7 from port of origin to final delivery with live status updates and proactive alerts.</p>
+        </div>
+      </div>
+      <div class="why-item fade-up">
+        <div class="why-num">04</div>
+        <div class="why-item-body">
+          <h4>Dedicated Trade Manager</h4>
+          <p>Every client gets a personal trade manager who handles documentation, compliance, and communication end-to-end.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <p class="section-eyebrow">Get In Touch</p>
+    <h2 class="section-title">Start Your Trade Journey</h2>
+    <p>Tell us about your import or export requirement and our team will respond within 24 hours with a tailored proposal.</p>
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" placeholder="Your name" required />
+      </div>
+      <div class="form-group">
+        <label>Company</label>
+        <input type="text" placeholder="Your company" />
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="you@company.com" required />
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="+91 78750 62063" />
+      </div>
+      <div class="form-group">
+        <label>Trade Type</label>
+        <select>
+          <option value="">Select trade type</option>
+          <option>Import to India</option>
+          <option>Export from India</option>
+          <option>Both Import & Export</option>
+          <option>Logistics Only</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Product Category</label>
+        <select>
+          <option value="">Select category</option>
+          <option>Agricultural Products</option>
+          <option>Industrial & Machinery</option>
+          <option>FMCG & Consumer Goods</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Message</label>
+        <textarea rows="5" placeholder="Describe your requirement — product, quantity, origin/destination…"></textarea>
+      </div>
+      <div class="form-submit">
+        <button type="submit">Send Inquiry</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <a href="#" class="logo">
+      <span class="bold" style="color:#fff;">Seven</span>&nbsp;<span class="italic" style="color:#48b5c4;">Seas</span>
+    </a>
+    <p>Your trusted partner for global import and export. Bridging markets, building lasting trade relationships across seven seas.</p>
+  </div>
+  <div class="footer-col">
+    <h5>Company</h5>
+    <ul>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#categories">Products</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h5>Services</h5>
+    <ul>
+      <li><a href="#">Ocean Freight</a></li>
+      <li><a href="#">Import</a></li>
+      <li><a href="#">Export</a></li>
+      <li><a href="#">Customs</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h5>Contact</h5>
+    <ul>
+      <li><a href="mailto:bhimani.fayaan000@gmail.com">bhimani.fayaan000@gmail.com</a></li>
+      <li><a href="tel:+917875062063">+91 78750 62063</a></li>
+      <li><a href="#">Mumbai, Maharashtra, India</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  © 2025 Seven Seas Import & Export Pvt. Ltd. · All rights reserved.
+</div>
+
+<div class="wave-footer">
+  <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:120px;">
+    <path class="wave-path wave1" d="M0 60 Q90 20 180 60 Q270 100 360 60 Q450 20 540 60 Q630 100 720 60 Q810 20 900 60 Q990 100 1080 60 Q1170 20 1260 60 Q1350 100 1440 60 L1440 120 L0 120 Z" fill="#0a3d5c" opacity="0.9"/>
+    <path class="wave-path wave2" d="M0 75 Q90 40 180 75 Q270 110 360 75 Q450 40 540 75 Q630 110 720 75 Q810 40 900 75 Q990 110 1080 75 Q1170 40 1260 75 Q1350 110 1440 75 L1440 120 L0 120 Z" fill="#1a6b8a" opacity="0.7"/>
+    <path class="wave-path wave3" d="M0 88 Q90 60 180 88 Q270 116 360 88 Q450 60 540 88 Q630 116 720 88 Q810 60 900 88 Q990 116 1080 88 Q1170 60 1260 88 Q1350 116 1440 88 L1440 120 L0 120 Z" fill="#2a9d8f" opacity="0.5"/>
+  </svg>
+</div>
+<style>
+  .wave-footer { background: rgba(0,0,0,0.2); overflow: hidden; line-height: 0; }
+  .wave-path { transform-origin: center; }
+  .wave1 { animation: waveMove 6s ease-in-out infinite; }
+  .wave2 { animation: waveMove 8s ease-in-out infinite reverse; }
+  .wave3 { animation: waveMove 10s ease-in-out infinite; }
+  @keyframes waveMove {
+    0%, 100% { d: path("M0 60 Q90 20 180 60 Q270 100 360 60 Q450 20 540 60 Q630 100 720 60 Q810 20 900 60 Q990 100 1080 60 Q1170 20 1260 60 Q1350 100 1440 60 L1440 120 L0 120 Z"); }
+    50% { d: path("M0 70 Q90 100 180 70 Q270 40 360 70 Q450 100 540 70 Q630 40 720 70 Q810 100 900 70 Q990 40 1080 70 Q1170 100 1260 70 Q1350 40 1440 70 L1440 120 L0 120 Z"); }
+  }
+</style>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Form submit
+  function handleSubmit(e){
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = '✓ Inquiry Sent!';
+    btn.style.background = '#2a9d8f';
+    setTimeout(() => {
+      btn.textContent = 'Send Inquiry';
+      btn.style.background = '';
+      e.target.reset();
+    }, 3000);
+  }
+</script>
+</body>
+</html>
